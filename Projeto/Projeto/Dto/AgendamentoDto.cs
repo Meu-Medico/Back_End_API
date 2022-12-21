@@ -17,12 +17,5 @@ namespace Projeto.Dto
 
         public bool Ativo { get; set; }
 
-        public virtual Beneficiario IdBeneficiarioNavigation { get; set; } = null!;
-
-        public virtual Especialidade IdEspecialidadeNavigation { get; set; } = null!;
-
-        public virtual Hospital IdHospitalNavigation { get; set; } = null!;
-
-        public virtual Profissional IdProfissionalNavigation { get; set; } = null!;
     }
 }
