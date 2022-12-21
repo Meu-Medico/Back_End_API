@@ -8,24 +8,23 @@ namespace Projeto.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HospitalController : ControllerBase
+    public class ProfissionalController : ControllerBase
     {
-        private readonly IHospitalRepositorio _hospitalRepositorio;
-        public HospitalController(IHospitalRepositorio hospitalRepositorio)
+        private readonly IProfissionalRepositorio _profissionalRepositorio;
+        public ProfissionalController(IProfissionalRepositorio profissionalRepositorio)
         {
-            _hospitalRepositorio = hospitalRepositorio;
+            _profissionalRepositorio= profissionalRepositorio;
         }
-        // GET: api/<HospitalController>
+        // GET: api/<ProfissionalController>
         [HttpGet]
-        [Route("/ListarTodos/Hospital")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
+        [Route("/ListarTodos/Profissional")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProfissionalDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListarTodos()
-        {   
+        {
             try
             {
-                //return Ok((from h in _context.Hospitals select h).ToList());
-                return Ok(_hospitalRepositorio.ListarTodos());
+                return Ok(_profissionalRepositorio.ListarTodos());
 
             }
             catch (Exception e)
@@ -33,19 +32,7 @@ namespace Projeto.Controller
 
                 return BadRequest(e.Message);
             }
-        }
-        [HttpPost]
-        [Route("/Cadastrar/Hospital")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Cadastrar(HospitalDto hospitalDto)
-        {
-            if (hospitalDto == null || String.IsNullOrEmpty(hospitalDto.Nome))
-                return NoContent();
-
-            return BadRequest();
-        }
-        /*
+        }/*
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

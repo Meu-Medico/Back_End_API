@@ -3,29 +3,29 @@ using Data.Contexto;
 using Data.Entidade;
 using Data.Dto;
 using Data.Interface;
+using Data.Repositorio;
 
 namespace Projeto.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HospitalController : ControllerBase
+    public class EspecialidadeController : ControllerBase
     {
-        private readonly IHospitalRepositorio _hospitalRepositorio;
-        public HospitalController(IHospitalRepositorio hospitalRepositorio)
+        private readonly IEspecialidadeRepositorio _especialidadeRepositorio;
+        public EspecialidadeController(IEspecialidadeRepositorio especialidadeRepositorio)
         {
-            _hospitalRepositorio = hospitalRepositorio;
+            _especialidadeRepositorio = especialidadeRepositorio;
         }
         // GET: api/<HospitalController>
         [HttpGet]
-        [Route("/ListarTodos/Hospital")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
+        [Route("/ListarTodos/Especialidade")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EspecialidadeDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListarTodos()
-        {   
+        {
             try
             {
-                //return Ok((from h in _context.Hospitals select h).ToList());
-                return Ok(_hospitalRepositorio.ListarTodos());
+                return Ok(_especialidadeRepositorio.ListarTodos());
 
             }
             catch (Exception e)
@@ -33,19 +33,7 @@ namespace Projeto.Controller
 
                 return BadRequest(e.Message);
             }
-        }
-        [HttpPost]
-        [Route("/Cadastrar/Hospital")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Cadastrar(HospitalDto hospitalDto)
-        {
-            if (hospitalDto == null || String.IsNullOrEmpty(hospitalDto.Nome))
-                return NoContent();
-
-            return BadRequest();
-        }
-        /*
+        }/*
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

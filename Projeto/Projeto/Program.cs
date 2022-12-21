@@ -7,6 +7,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Data.Contexto.ProjetoContext>();
+builder.Services.AddScoped<Data.Interface.IHospitalRepositorio,Data.Repositorio.HospitalRepositorio>();
+builder.Services.AddScoped<Data.Interface.IProfissionalRepositorio,Data.Repositorio.ProfissionalRepositorio>();
+builder.Services.AddScoped<Data.Interface.IEspecialidadeRepositorio,Data.Repositorio.EspecialidadeRepositorio>();
 
 //--------CORS-------------
 builder.Services.AddCors(options => {
