@@ -6,6 +6,7 @@ namespace Projeto.Entidade;
 public partial class Agendamento
 {
     public int IdAgendamento { get; set; }
+    //
 
     public int IdHospital { get; set; }
 
