@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Projeto.Repositorio
-{
-    {
-        [Route("api/[controller]")]
+{/*
+    [Route("api/[controller]")]
     [ApiController]
     public class AgendamentoController : ControllerBase
     {
@@ -15,7 +14,7 @@ namespace Projeto.Repositorio
 
         public AgendamentoController(IAgendamentoService agendamentoService)
         {
-            _agendamentoService = agendamentoService;
+
         }
 
         [HttpGet]
@@ -85,8 +84,8 @@ namespace Projeto.Repositorio
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                  }
+                return StatusCode(StatusCodes.Status500InternalServerError;
+            }
             [HttpDelete("{id}")]
             public IActionResult Delete(int id)
             {
@@ -106,4 +105,5 @@ namespace Projeto.Repositorio
             }
         }
     }
+   */ 
 }

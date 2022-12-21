@@ -4,110 +4,107 @@ using Projeto.Dto;
 
 namespace Projeto.Controller
 {
-
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AgendamentoController : ControllerBase
     {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class AgendamentoController : ControllerBase
+        private readonly Interface.IAgendamentoRepository _agendamentoRepository;
+
+        public AgendamentoController(
+            Projeto.Interface.IAgendamentoRepository agendamentoRepository)
         {
-            private readonly Projeto.Data.Interface.IAgendamentoRepository _agendamentoRepository;
+            _agendamentoRepository = agendamentoRepository;
+        }
 
-            public AgendamentoController(
-                Projeto.Data.Interface.IAgendamentoRepository agendamentoRepository)
+
+
+        [HttpGet]
+        [Route("api/Consultar")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Projeto.Dto.AgendamentoDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Consultar()
+        {
+            try
             {
-                _agendamentoRepository = agendamentoRepository;
-            }
+                List<AgendamentoDto> resultado = _agendamentoRepository.Listar();
 
-
-
-            [HttpGet]
-            [Route("api/Consultar")]
-            [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Projeto.Data.Dto.AgendamentoDto>))]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult Consultar()
-            {
-                try
+                if (resultado == null)
                 {
-                    List<AgendamentoDto> resultado = _agendamentoRepository.Listar();
-
-                    if (resultado == null)
-                    {
-                        return NoContent();
-                    }
-
-                    if (resultado.Count == 0)
-                    {
-                        throw new Exception("Sem elementos");
-                    }
-
-                    return Ok(resultado);
+                    return NoContent();
                 }
-                catch (Exception ex)
+
+                if (resultado.Count == 0)
                 {
-                    return BadRequest(ex.Message);
+                    throw new Exception("Sem elementos");
                 }
-            }
 
-            // Anotação de uso do Verb HTTP Get
-            [HttpGet]
-            [Route("api/Consultar/{id}")]
-            [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Projeto.Data.Dto.AgendamentoDto))]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult Consultar(int id)
+                return Ok(resultado);
+            }
+            catch (Exception ex)
             {
-                if (id < 1)
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // Anotação de uso do Verb HTTP Get
+        [HttpGet]
+        [Route("api/Consultar/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Projeto.Dto.AgendamentoDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Consultar(int id)
+        {
+            if (id < 1)
+                return NoContent();
+
+            try
+            {
+                AgendamentoDto resultado = _agendamentoRepository.Consultar(id);
+
+                if (resultado == null)
                     return NoContent();
 
-                try
-                {
-                    AgendamentoDto resultado = _agendamentoRepository.Consultar(id);
-
-                    if (resultado == null)
-                        return NoContent();
-
-                    return Ok(resultado);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+                return Ok(resultado);
             }
-
-            [HttpPost]
-            [Route("api/Cadastrar")]
-            [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult Cadastrar(AgendamentoDto cadastrarDto)
+            catch (Exception ex)
             {
-                if (cadastrarDto == null || cadastrarDto.IdHospital < 1)
-                    return NoContent();
-
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
+        }
 
-            [HttpPatch]
-            [Route("api/Atualizar")]
-            [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult Atualizar(AgendamentoDto cadastrarDto)
-            {
-                if (cadastrarDto == null || cadastrarDto.IdAgendamento < 1)
-                    return NoContent();
+        [HttpPost]
+        [Route("api/Cadastrar")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Cadastrar(AgendamentoDto cadastrarDto)
+        {
+            if (cadastrarDto == null || cadastrarDto.IdHospital < 1)
+                return NoContent();
 
-                return BadRequest();
-            }
+            return BadRequest();
+        }
 
-            [HttpDelete]
-            [Route("api/Excluir")]
-            [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult Excluir(int id)
-            {
-                if (id < 1)
-                    return NoContent();
+        [HttpPatch]
+        [Route("api/Atualizar")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Atualizar(AgendamentoDto cadastrarDto)
+        {
+            if (cadastrarDto == null || cadastrarDto.IdAgendamento < 1)
+                return NoContent();
 
-                return BadRequest();
-            }
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [Route("api/Excluir")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Excluir(int id)
+        {
+            if (id < 1)
+                return NoContent();
+
+            return BadRequest();
         }
     }
 }
