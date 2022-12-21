@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Projeto.Entidade;
+namespace Data.Entidade;
 
 public partial class Especialidade
 {

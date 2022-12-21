@@ -1,6 +1,6 @@
-﻿using Projeto.Entidade;
+﻿using Data.Entidade;
 
-namespace Projeto.Dto
+namespace Data.Dto
 {
     public class AgendamentoDto
     {

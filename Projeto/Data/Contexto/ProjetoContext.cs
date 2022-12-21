@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Data.Entidade;
 using Microsoft.EntityFrameworkCore;
-using Projeto.Entidade;
+using Microsoft.Extensions.Configuration;
 
-namespace Projeto.Contexto;
+namespace Data.Contexto;
 
 public partial class ProjetoContext : DbContext
 {
@@ -12,7 +11,7 @@ public partial class ProjetoContext : DbContext
     {
     }
 
-    public ProjetoContext(DbContextOptions<ProjetoContext> options , IConfiguration configuration)
+    public ProjetoContext(DbContextOptions<ProjetoContext> options, IConfiguration configuration)
         : base(options)
     {
         _configuration = configuration;
