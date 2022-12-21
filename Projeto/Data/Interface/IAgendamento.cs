@@ -1,6 +1,6 @@
-﻿using Projeto.Entidade;
+﻿using Data.Entidade;
 
-namespace Projeto.Interface
+namespace Data.Interface
 {
     public interface IAgendamentoRepository
     {

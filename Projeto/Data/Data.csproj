@@ -22,10 +22,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Dto\" />
 	  <Folder Include="Entidade\" />
 	  <Folder Include="Contexto\" />
-	  <Folder Include="Repositorio\" />
 	</ItemGroup>
 
 </Project>

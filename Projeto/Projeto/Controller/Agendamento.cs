@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Projeto.Dto;
+using Data.Dto;
+using Data.Interface;
 
 namespace Projeto.Controller
 {
@@ -8,10 +9,10 @@ namespace Projeto.Controller
     [ApiController]
     public class AgendamentoController : ControllerBase
     {
-        private readonly Interface.IAgendamentoRepository _agendamentoRepository;
+        private readonly IAgendamentoRepository _agendamentoRepository;
 
         public AgendamentoController(
-            Projeto.Interface.IAgendamentoRepository agendamentoRepository)
+           IAgendamentoRepository agendamentoRepository)
         {
             _agendamentoRepository = agendamentoRepository;
         }
@@ -20,7 +21,7 @@ namespace Projeto.Controller
 
         [HttpGet]
         [Route("api/Consultar")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Projeto.Dto.AgendamentoDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Data.Dto.AgendamentoDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Consultar()
         {
@@ -49,7 +50,7 @@ namespace Projeto.Controller
         // Anotação de uso do Verb HTTP Get
         [HttpGet]
         [Route("api/Consultar/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Projeto.Dto.AgendamentoDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Dto.AgendamentoDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Consultar(int id)
         {

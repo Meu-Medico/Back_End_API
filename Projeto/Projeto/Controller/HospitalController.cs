@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Projeto.Contexto;
+using Data.Contexto;
+using Data.Entidade;
 
 namespace Projeto.Controller
 {
@@ -7,7 +8,7 @@ namespace Projeto.Controller
     [ApiController]
     public class HospitalController : ControllerBase
     {
-        private readonly Contexto.ProjetoContext _context;
+        private readonly ProjetoContext _context;
         public HospitalController(ProjetoContext context)
         {
             _context = context;
@@ -15,10 +16,10 @@ namespace Projeto.Controller
         // GET: api/<HospitalController>
         [HttpGet]
         [Route("/ListarTodos")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Entidade.Hospital>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Hospital>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListarTodos()
-        {
+        {   
             try
             {
                 return Ok((from h in _context.Hospitals select h).ToList());
