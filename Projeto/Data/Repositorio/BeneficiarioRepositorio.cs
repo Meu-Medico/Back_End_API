@@ -60,7 +60,7 @@ namespace Data.Repositorio
         public int Excluir(int Id)
         {
             Beneficiario beneficiarioEntidade = (from b in _context.Beneficiarios  
-                                                 where b.IdBeneficiario == id
+                                                 where b.IdBeneficiario == Id
                                                  select b).FirstOrDefault();
             if (beneficiarioEntidade == null || DBNull.Value.Equals(beneficiarioEntidade.IdBeneficiario)|| beneficiarioEntidade.IdBeneficiario == 0)
             {
@@ -92,7 +92,7 @@ namespace Data.Repositorio
         {
             return (from t in _context.Beneficiarios
                     where t.IdBeneficiario == id
-                    select new BeneficiarioDto()
+                    select new Dto.Beneficiario.BeneficiarioDto()
                     {
                         IdBeneficiario = t.IdBeneficiario,
                         Nome = t.Nome,
@@ -103,9 +103,7 @@ namespace Data.Repositorio
                         Ativo = t.Ativo,
                         Email = t.Email,
                         Senha = t.Senha,
-                    })
-                   ?.FirstOrDefault()
-                   ?? new BeneficiarioDto();
+                    }).ToList();
         }
     }
 }
