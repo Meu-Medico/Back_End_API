@@ -4,12 +4,12 @@ using Data.Dto;
 using Data.Interface;
 
 namespace Projeto.Controller
-{
+{/*
     [Route("api/[controller]")]
     [ApiController]
     public class AgendamentoController : ControllerBase
     {
-        private readonly IAgendamentoRepository _agendamentoRepository;
+        private readonly AgendamentoRepositorio _agendamentoRepository;
 
         public AgendamentoController(
            IAgendamentoRepository agendamentoRepository)
@@ -107,5 +107,5 @@ namespace Projeto.Controller
 
             return BadRequest();
         }
-    }
+    }*/
 }
