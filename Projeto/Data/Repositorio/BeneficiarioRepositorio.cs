@@ -1,9 +1,9 @@
 ﻿using Data.Dto.Beneficiario;
-using Data.Interfaces;
+using Data.Interface;
 using Projeto.Entidade;
 using Data.Contexto;
 
-namespace Data.Repositorios
+namespace Data.Repositorio
 {
     public class BeneficiarioRepositorio : IBeneficiarioRepositorio
     {
@@ -30,7 +30,7 @@ namespace Data.Repositorios
             _context.SaveChanges();
             return beneficiarioEntidade;
         }
-        public Beneficiario Editar(BeneficiarioEditarDto beneficiario)
+        public int Editar(BeneficiarioEditarDto beneficiario)
         {
             Beneficiario beneficiarioEntidadeBD =
             (from c in _context.Beneficiarios
@@ -38,35 +38,39 @@ namespace Data.Repositorios
              select c)
              ?.FirstOrDefault()
              ?? new Beneficiario();
-            if (beneficiarioEntidadeBD == null || DBNull.Value.Equals(beneficiarioEntidadeBD.IdBeneficiario) || beneficiarioEntidadeBD.IdBeneficiario == 0)
+            if (beneficiario == null || DBNull.Value.Equals(beneficiario.IdBeneficiario) || beneficiario.IdBeneficiario == 0)
             {
-                return null;
+                return 0;
             }
-            Beneficiario beneficiarioEntidade = new Beneficiario()
-            {
-                IdBeneficiario = beneficiario.IdBeneficiario,
-                Nome = (beneficiario.Nome != null ? beneficiario.Nome : beneficiarioEntidadeBD.Nome),
-                Cpf = (beneficiario.Cpf != null ? beneficiario.Cpf : beneficiarioEntidadeBD.Cpf),
-                NumeroCarteirinha = (beneficiario.NumeroCarteirinha != null ? beneficiario.NumeroCarteirinha : beneficiarioEntidadeBD.NumeroCarteirinha),
-                Telefone = (beneficiario.Telefone != null ? beneficiario.Telefone : beneficiarioEntidadeBD.Telefone),
-                Endereco = (beneficiario.Endereco != null ? beneficiario.Endereco : beneficiarioEntidadeBD.Endereco),
-                Ativo = beneficiario.Ativo,
-                Email = (beneficiario.Email != null ? beneficiario.Email : beneficiarioEntidadeBD.Email),
-                Senha = (beneficiario.Senha != null ? beneficiario.Senha : beneficiarioEntidadeBD.Senha),
-            };
+            //Beneficiario beneficiarioEntidade = new Beneficiario()
+            beneficiarioEntidadeBD.IdBeneficiario = beneficiario.IdBeneficiario;
+            beneficiarioEntidadeBD.Nome = beneficiario.Nome;
+            beneficiarioEntidadeBD.Cpf = beneficiario.Cpf;
+            beneficiarioEntidadeBD.NumeroCarteirinha = beneficiario.NumeroCarteirinha;
+            beneficiarioEntidadeBD.Telefone = beneficiario.Telefone;
+            beneficiarioEntidadeBD.Endereco = beneficiario.Endereco;
+            beneficiarioEntidadeBD.Ativo = beneficiario.Ativo;
+            beneficiarioEntidadeBD.Email = beneficiario.Email;
+            beneficiarioEntidadeBD.Senha = beneficiario.Senha;
+           
             _context.ChangeTracker.Clear();
-            _context.Beneficiarios.Update(beneficiarioEntidade);
-            _context.SaveChanges();
-            return beneficiarioEntidade;
+            _context.Beneficiarios.Update(beneficiarioEntidadeBD);
+            return _context.SaveChanges();
         }
         public int Excluir(int Id)
         {
-            var beneficiario = new Beneficiario()
+            Beneficiario beneficiarioEntidade = (from b in _context.Beneficiarios  
+                                                 where b.IdBeneficiario == id
+                                                 select b).FirstOrDefault();
+            if (beneficiarioEntidade == null || DBNull.Value.Equals(beneficiarioEntidade.IdBeneficiario)|| beneficiarioEntidade.IdBeneficiario == 0)
             {
-                IdBeneficiario = Id
-            };
-            _context.Beneficiarios.Remove(beneficiario);
-            return _context.SaveChanges();
+                return 0;
+            }
+
+            _context.ChangeTracker.Clear();
+            _context.Beneficiarios.Remove(beneficiarioEntidade);
+            return _context.SaveChanges(); 
+
         }
         public List<BeneficiarioDto> ListarTodos()
         {
@@ -84,7 +88,7 @@ namespace Data.Repositorios
             }).ToList();
         }
 
-        public BeneficiarioDto ListarPorId(int id)
+        public List<BeneficiarioDto> ListarPorId(int id)
         {
             return (from t in _context.Beneficiarios
                     where t.IdBeneficiario == id

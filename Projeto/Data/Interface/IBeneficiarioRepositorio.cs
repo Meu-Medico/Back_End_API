@@ -2,7 +2,7 @@
 using Data.Dto.Beneficiario;
 using Projeto.Entidade;
 
-namespace Data.Interfaces
+namespace Data.Interface
 {
     public interface IBeneficiarioRepositorio
            {
@@ -10,7 +10,7 @@ namespace Data.Interfaces
             BeneficiarioDto ListarPorId(int id);
             Beneficiario Criar(BeneficiarioCriarDto beneficiario);
             int Excluir(int Id);
-            Beneficiario Editar(BeneficiarioEditarDto beneficiario);
+            int Editar(BeneficiarioEditarDto beneficiario);
     }
 }
 
