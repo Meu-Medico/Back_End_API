@@ -3,6 +3,7 @@ using Data.Contexto;
 using Data.Entidade;
 using Data.Dto;
 using Data.Interface;
+using Data.Repositorio;
 
 namespace Projeto.Controller
 {
@@ -15,9 +16,8 @@ namespace Projeto.Controller
         {
             _profissionalRepositorio= profissionalRepositorio;
         }
-        // GET: api/<ProfissionalController>
         [HttpGet]
-        [Route("/ListarTodos/Profissional")]
+        [Route("/ListarTodos/Profissionais")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProfissionalDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListarTodos()
@@ -25,42 +25,86 @@ namespace Projeto.Controller
             try
             {
                 return Ok(_profissionalRepositorio.ListarTodos());
-
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
-        }/*
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
         }
-
-        // GET api/<HospitalController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("/ProfissionalID/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProfissionalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorId(int id)
         {
-            return "value";
+            try
+            {
+                return Ok(_profissionalRepositorio.ListarPorId(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        // POST api/<HospitalController>
+        [HttpGet]
+        [Route("/ListarNome/Profissional/{nome}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProfissionalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorNome(string nome)
+        {
+            try
+            {
+                return Ok(_profissionalRepositorio.ListarPorNome(nome));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("/Cadastrar/Profissional")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProfissionalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Cadastrar(ProfissionalDto profissionalDto)
         {
+            try
+            {
+                return Ok(_profissionalRepositorio.Cadastrar(profissionalDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        // PUT api/<HospitalController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPatch]
+        [Route("/Atualizar/Profissional")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProfissionalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AtualizarHospital(ProfissionalDto profissionalDto)
         {
+            try
+            {
+                return Ok(_profissionalRepositorio.Atualizar(profissionalDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        // DELETE api/<HospitalController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("/Excluir/Profissional")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Excluir(int id)
         {
-        }*/
+            try
+            {
+                return Ok(_profissionalRepositorio.Excluir(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

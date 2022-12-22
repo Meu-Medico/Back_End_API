@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entidade;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,10 @@ namespace Data.Dto
         public string Telefone { get; set; }
         public string Cnes { get; set; }
         public bool Ativo { get; set; }
+
+        public static implicit operator HospitalDto(Hospital v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

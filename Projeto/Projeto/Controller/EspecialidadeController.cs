@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Data.Contexto;
-using Data.Entidade;
 using Data.Dto;
 using Data.Interface;
-using Data.Repositorio;
 
 namespace Projeto.Controller
 {
@@ -16,9 +13,8 @@ namespace Projeto.Controller
         {
             _especialidadeRepositorio = especialidadeRepositorio;
         }
-        // GET: api/<HospitalController>
         [HttpGet]
-        [Route("/ListarTodos/Especialidade")]
+        [Route("/ListarTodos/Especialidades")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EspecialidadeDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListarTodos()
@@ -26,42 +22,87 @@ namespace Projeto.Controller
             try
             {
                 return Ok(_especialidadeRepositorio.ListarTodos());
-
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
-        }/*
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
         }
-
-        // GET api/<HospitalController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("/Listar/Especialidade/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EspecialidadeDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorId(int id)
         {
-            return "value";
+            try
+            {
+                return Ok(_especialidadeRepositorio.ListarPorId(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        // POST api/<HospitalController>
+        [HttpGet]
+        [Route("/ListarNome/Especialidade/{nome}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EspecialidadeDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorNome(string nome)
+        {
+            try
+            {
+                return Ok(_especialidadeRepositorio.ListarPorNome(nome));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("/Cadastrar/Especialidade")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EspecialidadeDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Cadastrar(EspecialidadeDto especialidadeDto)
         {
+            try
+            {
+                return Ok(_especialidadeRepositorio.Cadastrar(especialidadeDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPatch]
+        [Route("/Atualizar/Especialidade")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EspecialidadeDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AtualizarHospital(EspecialidadeDto especialidadeDto)
+        {
+            try
+            {
+                return Ok(_especialidadeRepositorio.Atualizar(especialidadeDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message); 
+            }
         }
 
-        // PUT api/<HospitalController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpDelete]
+        [Route("/Excluir/Especialidade")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Excluir(int id)
         {
+            try
+            {
+                return Ok(_especialidadeRepositorio.Excluir(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        // DELETE api/<HospitalController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }*/
     }
 }

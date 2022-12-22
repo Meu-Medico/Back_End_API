@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Data.Contexto;
-using Data.Entidade;
 using Data.Dto;
 using Data.Interface;
 
@@ -15,65 +13,98 @@ namespace Projeto.Controller
         {
             _hospitalRepositorio = hospitalRepositorio;
         }
-        // GET: api/<HospitalController>
         [HttpGet]
-        [Route("/ListarTodos/Hospital")]
+        [Route("/ListarTodos/Hospitais")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListarTodos()
-        {   
+        {
             try
             {
-                //return Ok((from h in _context.Hospitals select h).ToList());
                 return Ok(_hospitalRepositorio.ListarTodos());
-
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet]
+        [Route("/ListarPorID/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorId(int id)
+        {
+            try
+            {
+                return Ok(_hospitalRepositorio.ListarPorId(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        [Route("/ListarPorNome/{nome}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorNome(string nome)
+        {
+            try
+            {
+                return Ok(_hospitalRepositorio.ListarPorNome(nome));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpPost]
         [Route("/Cadastrar/Hospital")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Cadastrar(HospitalDto hospitalDto)
         {
-            if (hospitalDto == null || String.IsNullOrEmpty(hospitalDto.Nome))
-                return NoContent();
-
-            return BadRequest();
+            try
+            {
+                return Ok(_hospitalRepositorio.Cadastrar(hospitalDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-        /*
-        public IEnumerable<string> Get()
+        [HttpPatch]
+        [Route("/Atualizar/Hospital")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HospitalDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AtualizarHospital(HospitalDto hospitalDto)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<HospitalController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<HospitalController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<HospitalController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            try
+            {
+                return Ok(_hospitalRepositorio.Atualizar(hospitalDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        // DELETE api/<HospitalController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("/Excluir/Hospital")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Excluir(int id)
         {
-        }*/
+            try
+            {
+                return Ok(_hospitalRepositorio.Excluir(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }
