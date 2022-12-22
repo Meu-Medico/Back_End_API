@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projeto.Entidade;
+using System;
 using System.Collections.Generic;
 
 namespace Data.Entidade;

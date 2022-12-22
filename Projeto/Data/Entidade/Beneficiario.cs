@@ -1,27 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Data.Entidade;
+using Microsoft.EntityFrameworkCore;
 
-namespace Data.Entidade;
-
-public partial class Beneficiario
+namespace Projeto.Entidade
 {
-    public int IdBeneficiario { get; set; }
+    [Table("Beneficiario")]
+    public partial class Beneficiario
+    {
+        public Beneficiario()
+        {
+            Agendamentos = new HashSet<Agendamento>();
+        }
 
-    public string Nome { get; set; } = null!;
+        [Key]
+        [Column("idBeneficiario")]
+        public int IdBeneficiario { get; set; }
+        [Unicode(false)]
+        public string Nome { get; set; } = null!;
+        [StringLength(14)]
+        [Unicode(false)]
+        public string Cpf { get; set; } = null!;
+        [StringLength(15)]
+        [Unicode(false)]
+        public string? Telefone { get; set; }
+        [StringLength(250)]
+        [Unicode(false)]
+        public string? Endereco { get; set; }
+        [StringLength(30)]
+        [Unicode(false)]
+        public string NumeroCarteirinha { get; set; } = null!;
+        public bool Ativo { get; set; }
+        [Column("email")]
+        [StringLength(100)]
+        [Unicode(false)]
+        public string Email { get; set; } = null!;
+        [Column("senha")]
+        [StringLength(30)]
+        [Unicode(false)]
+        public string Senha { get; set; } = null!;
 
-    public string Cpf { get; set; } = null!;
-
-    public string? Telefone { get; set; }
-
-    public string? Endereco { get; set; }
-
-    public string NumeroCarteirinha { get; set; } = null!;
-
-    public bool Ativo { get; set; }
-
-    public string Email { get; set; } = null!;
-
-    public string Senha { get; set; } = null!;
-
-    public virtual ICollection<Agendamento> Agendamentos { get; } = new List<Agendamento>();
+        [InverseProperty("IdBeneficiarioNavigation")]
+        public virtual ICollection<Agendamento> Agendamentos { get; set; }
+    }
 }

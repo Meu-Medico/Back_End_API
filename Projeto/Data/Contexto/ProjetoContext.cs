@@ -1,6 +1,8 @@
 ﻿using Data.Entidade;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Data;
+using Projeto.Entidade;
 
 namespace Data.Contexto;
 
